@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #F8F7F4;
+  --color-surface: #FAFAF8;
+  --color-text-primary: #111827;
+  --color-text-muted: #6B7280;
+  --color-accent: #10B981;
+  --color-accent-dark: #059669;
+  --color-accent-light: #D1FAE5;
+  --color-gold: #C9A43E;
+  --color-gold-light: #FDF3D7;
+  --color-shadow-black: #0F172A;
+
+  --font-heading: var(--font-syne), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-display: var(--font-fraunces), serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  background-color: #F8F7F4;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F8F7F4; }
+::-webkit-scrollbar-thumb { background: #10B981; border-radius: 3px; }
+
+/* Video/gradient text mask */
+.text-clip {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
