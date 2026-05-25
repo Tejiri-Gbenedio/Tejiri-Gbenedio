@@ -7,6 +7,7 @@ export default function CustomCursor() {
   const mouseY = useMotionValue(-100)
   const [hovering, setHovering] = useState(false)
   const [clicking, setClicking] = useState(false)
+  const [isMouseDevice, setIsMouseDevice] = useState(false)
 
   const dotX = useSpring(mouseX, { stiffness: 600, damping: 32 })
   const dotY = useSpring(mouseY, { stiffness: 600, damping: 32 })
@@ -14,6 +15,10 @@ export default function CustomCursor() {
   const ringY = useSpring(mouseY, { stiffness: 90, damping: 18 })
 
   useEffect(() => {
+    // Only activate on devices with a precise pointer (mouse/trackpad)
+    if (!window.matchMedia('(pointer: fine)').matches) return
+    setIsMouseDevice(true)
+
     const onMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
@@ -32,6 +37,8 @@ export default function CustomCursor() {
       window.removeEventListener('mouseup', onUp)
     }
   }, [mouseX, mouseY])
+
+  if (!isMouseDevice) return null
 
   return (
     <>
