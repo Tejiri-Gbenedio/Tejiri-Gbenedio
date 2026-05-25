@@ -18,13 +18,14 @@ const inter = Inter({
 
 const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-fraunces',
   weight: ['700', '900'],
   style: ['normal', 'italic'],
   display: 'swap',
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tejiri-gbenedio.vercel.app'),
   title: 'Tejiri Gbenedio — AI Automation & Full-Stack Web Developer',
   description:
     'I build modern websites, e-commerce platforms, automations, and AI-powered digital experiences that help businesses grow online.',
@@ -33,6 +34,13 @@ export const metadata: Metadata = {
     title: 'Tejiri Gbenedio — AI Automation & Full-Stack Web Developer',
     description: 'Modern websites, e-commerce, and AI-powered digital experiences.',
     type: 'website',
+    url: 'https://tejiri-gbenedio.vercel.app',
+    siteName: 'Tejiri Gbenedio — Portfolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tejiri Gbenedio — AI Automation & Full-Stack Web Developer',
+    description: 'Modern websites, e-commerce, and AI-powered digital experiences.',
   },
 }
 

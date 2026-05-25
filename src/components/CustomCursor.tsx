@@ -38,12 +38,10 @@ export default function CustomCursor() {
       {/* Inner dot — snaps fast */}
       <motion.div
         className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full"
-        style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%' }}
+        style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%', width: 12, height: 12 }}
         animate={{
-          width: hovering ? 12 : 7,
-          height: hovering ? 12 : 7,
+          scale: clicking ? 0.5 : (hovering ? 1 : 0.58),
           backgroundColor: hovering ? '#C9A43E' : '#10B981',
-          scale: clicking ? 0.5 : 1,
         }}
         transition={{ duration: 0.12, ease: 'easeOut' }}
       />
@@ -56,14 +54,14 @@ export default function CustomCursor() {
           translateX: '-50%',
           translateY: '-50%',
           border: '1.5px solid',
+          width: 44,
+          height: 44,
         }}
         animate={{
-          width: hovering ? 44 : 30,
-          height: hovering ? 44 : 30,
+          scale: clicking ? 0.75 : (hovering ? 1 : 0.68),
           borderColor: hovering ? '#C9A43E' : '#10B981',
           backgroundColor: hovering ? 'rgba(201,164,62,0.06)' : 'rgba(0,0,0,0)',
           opacity: clicking ? 0.5 : 0.65,
-          scale: clicking ? 0.75 : 1,
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       />

@@ -26,9 +26,9 @@ export default function Testimonials() {
               style={{ background: '#F8F7F4', borderColor: '#F3F4F6' }}
             >
               {/* Stars */}
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-1 mb-4" role="img" aria-label={`${t.rating} out of 5 stars`}>
                 {Array.from({ length: t.rating }).map((_, idx) => (
-                  <Star key={idx} size={13} style={{ fill: '#C9A43E', color: '#C9A43E' }} />
+                  <Star key={idx} size={13} aria-hidden="true" style={{ fill: '#C9A43E', color: '#C9A43E' }} />
                 ))}
               </div>
 

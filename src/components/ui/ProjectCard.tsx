@@ -42,7 +42,7 @@ function CardContent({ project }: { project: Project }) {
 
       <div className="flex flex-wrap gap-1.5 mb-5">
         {project.techStack.map((t) => (
-          <span key={t} className="text-xs px-2.5 py-1 rounded-full font-mono" style={{ background: '#F3F4F6', color: '#6B7280' }}>
+          <span key={t} className="text-xs px-2.5 py-1 rounded-full font-mono" style={{ background: '#F3F4F6', color: '#4B5563' }}>
             {t}
           </span>
         ))}
@@ -55,14 +55,15 @@ function CardContent({ project }: { project: Project }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm font-semibold group/link"
           style={{ color: '#10B981', fontFamily: 'var(--font-syne)' }}
+          aria-label={`View ${project.title} live site (opens in new tab)`}
         >
           View Live Site
-          <ArrowUpRight size={15} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+          <ArrowUpRight size={15} aria-hidden="true" className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
         </a>
       )}
       {project.status === 'coming-soon' && (
         <span className="inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: '#9CA3AF', fontFamily: 'var(--font-syne)' }}>
-          <ExternalLink size={14} /> In Development
+          <ExternalLink size={14} aria-hidden="true" /> In Development
         </span>
       )}
     </>
