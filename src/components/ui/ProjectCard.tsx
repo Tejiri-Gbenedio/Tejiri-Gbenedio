@@ -7,6 +7,15 @@ import type { projects } from '@/data'
 
 type Project = Omit<(typeof projects)[number], 'status'> & { status: 'live' | 'coming-soon'; hideLink?: boolean }
 
+const shadowFloat1 = {
+  x: [-15, 2, 13, -15, 11, -1, -15],
+  y: [-15, -4, -7, 15, -3, 11, -15],
+}
+const shadowFloat2 = {
+  x: [15, -10, 3, 15, -2, -12, 15],
+  y: [15, -6, 9, -15, 6, -8, 15],
+}
+
 function CardContent({ project }: { project: Project }) {
   return (
     <>
@@ -72,6 +81,7 @@ function CardContent({ project }: { project: Project }) {
 
 export default function ProjectCard({ project, index, portrait }: { project: Project; index: number; portrait?: boolean }) {
   const [hovered, setHovered] = useState(false)
+  const [imageHovered, setImageHovered] = useState(false)
 
   if (portrait) {
     return (
@@ -90,26 +100,50 @@ export default function ProjectCard({ project, index, portrait }: { project: Pro
           boxShadow: hovered ? '0 20px 50px rgba(0,0,0,0.09)' : '0 1px 3px rgba(0,0,0,0.04)',
         }}
       >
-        {/* Portrait image — full height on left */}
+        {/* Portrait image with floating shadow animation */}
         <div
-          className="relative w-full md:w-72 shrink-0 overflow-hidden rounded-t-xl md:rounded-tl-xl md:rounded-bl-xl md:rounded-tr-none md:rounded-br-none"
-          style={{ background: '#EDECEA', minHeight: '420px' }}
+          className="relative w-full md:w-72 shrink-0"
+          style={{ isolation: 'isolate', minHeight: '420px' }}
+          onMouseEnter={() => setImageHovered(true)}
+          onMouseLeave={() => setImageHovered(false)}
         >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 288px"
-            style={{ objectFit: 'contain', padding: '20px', transform: hovered ? 'scale(1.02)' : 'scale(1)', transition: 'transform 0.5s ease' }}
+          {/* Shadow layer 1 — emerald */}
+          <motion.div
+            className="absolute inset-0 rounded-t-xl md:rounded-tl-xl md:rounded-bl-xl md:rounded-tr-none md:rounded-br-none"
+            style={{ background: 'rgba(16,185,129,0.5)', zIndex: 0 }}
+            animate={imageHovered ? shadowFloat1 : { x: 0, y: 0 }}
+            transition={imageHovered ? { duration: 3, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
           />
-          <div className="absolute top-3 left-3">
-            <span
-              className="text-white text-xs font-semibold px-3 py-1 rounded-full"
-              style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
-            >
-              {project.category}
-            </span>
-          </div>
+          {/* Shadow layer 2 — gold */}
+          <motion.div
+            className="absolute inset-0 rounded-t-xl md:rounded-tl-xl md:rounded-bl-xl md:rounded-tr-none md:rounded-br-none"
+            style={{ background: 'rgba(201,164,62,0.5)', zIndex: 0 }}
+            animate={imageHovered ? shadowFloat2 : { x: 0, y: 0 }}
+            transition={imageHovered ? { duration: 3.5, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
+          />
+          {/* Image — on top, clips contents */}
+          <motion.div
+            className="relative w-full overflow-hidden rounded-t-xl md:rounded-tl-xl md:rounded-bl-xl md:rounded-tr-none md:rounded-br-none"
+            style={{ background: '#EDECEA', minHeight: '420px', zIndex: 1 }}
+            animate={{ scale: imageHovered ? [1, 1.05, 0.97, 1] : 1 }}
+            transition={{ duration: 0.4, times: [0, 0.33, 0.66, 1] }}
+          >
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 288px"
+              style={{ objectFit: 'contain', padding: '20px' }}
+            />
+            <div className="absolute top-3 left-3">
+              <span
+                className="text-white text-xs font-semibold px-3 py-1 rounded-full"
+                style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
+              >
+                {project.category}
+              </span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Content — right side */}
@@ -136,34 +170,60 @@ export default function ProjectCard({ project, index, portrait }: { project: Pro
         boxShadow: hovered ? '0 20px 50px rgba(0,0,0,0.09)' : '0 1px 3px rgba(0,0,0,0.04)',
       }}
     >
-      {/* Image */}
-      <div className="relative h-52 overflow-hidden rounded-t-xl bg-gray-100">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-500"
-          style={{ transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
+      {/* Image section with floating shadow animation */}
+      <div
+        className="relative"
+        style={{ isolation: 'isolate' }}
+        onMouseEnter={() => setImageHovered(true)}
+        onMouseLeave={() => setImageHovered(false)}
+      >
+        {/* Shadow layer 1 — emerald */}
+        <motion.div
+          className="absolute inset-0 rounded-t-xl"
+          style={{ background: 'rgba(16,185,129,0.5)', zIndex: 0 }}
+          animate={imageHovered ? shadowFloat1 : { x: 0, y: 0 }}
+          transition={imageHovered ? { duration: 3, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
         />
-        {project.status === 'coming-soon' && (
-          <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(15,23,42,0.65)' }}>
+        {/* Shadow layer 2 — gold */}
+        <motion.div
+          className="absolute inset-0 rounded-t-xl"
+          style={{ background: 'rgba(201,164,62,0.5)', zIndex: 0 }}
+          animate={imageHovered ? shadowFloat2 : { x: 0, y: 0 }}
+          transition={imageHovered ? { duration: 3.5, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
+        />
+        {/* Image — on top, clips contents */}
+        <motion.div
+          className="relative h-52 overflow-hidden rounded-t-xl bg-gray-100"
+          style={{ zIndex: 1 }}
+          animate={{ scale: imageHovered ? [1, 1.05, 0.97, 1] : 1 }}
+          transition={{ duration: 0.4, times: [0, 0.33, 0.66, 1] }}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+          {project.status === 'coming-soon' && (
+            <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(15,23,42,0.65)' }}>
+              <span
+                className="text-white text-xs font-semibold uppercase tracking-widest border border-white/30 px-4 py-2 rounded-full"
+                style={{ fontFamily: 'var(--font-syne)' }}
+              >
+                Coming Soon
+              </span>
+            </div>
+          )}
+          <div className="absolute top-3 left-3">
             <span
-              className="text-white text-xs font-semibold uppercase tracking-widest border border-white/30 px-4 py-2 rounded-full"
-              style={{ fontFamily: 'var(--font-syne)' }}
+              className="text-white text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
             >
-              Coming Soon
+              {project.category}
             </span>
           </div>
-        )}
-        <div className="absolute top-3 left-3">
-          <span
-            className="text-white text-xs font-semibold px-3 py-1 rounded-full"
-            style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
-          >
-            {project.category}
-          </span>
-        </div>
+        </motion.div>
       </div>
 
       {/* Content */}
