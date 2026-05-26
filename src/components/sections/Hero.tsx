@@ -64,9 +64,10 @@ export default function Hero() {
             <span
               className="block text-clip"
               style={{
-                backgroundImage: 'linear-gradient(135deg, #10B981 0%, #C9A43E 45%, #059669 80%, #10B981 100%)',
+                backgroundImage: 'linear-gradient(90deg, #10B981 0%, #C9A43E 35%, #F59E0B 55%, #10B981 80%, #059669 100%)',
                 backgroundSize: '200% auto',
                 fontStyle: 'italic',
+                animation: 'gradientFlow 3s linear infinite',
               }}
             >
               &amp; Full-Stack
