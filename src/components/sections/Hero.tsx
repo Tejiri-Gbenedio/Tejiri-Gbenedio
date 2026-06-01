@@ -1,26 +1,32 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { GooeyFilter } from '@/components/ui/gooey-filter'
-import { PixelTrail } from '@/components/ui/pixel-trail'
+import { PixelTrail, type PixelTrailHandle } from '@/components/ui/pixel-trail'
 import { useScreenSize } from '@/hooks/use-screen-size'
 import { techPills, contactLinks } from '@/data'
 
 export default function Hero() {
   const [isMouseDevice, setIsMouseDevice] = useState(false)
   const screenSize = useScreenSize()
+  const pixelTrailRef = useRef<PixelTrailHandle>(null)
 
   useEffect(() => {
     if (window.matchMedia('(pointer: fine)').matches) setIsMouseDevice(true)
   }, [])
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    pixelTrailRef.current?.handleMouseMove({ clientX: e.clientX, clientY: e.clientY })
+  }
 
   return (
     <section
       id="hero"
       className="relative min-h-screen flex flex-col justify-center pt-16 px-6 overflow-hidden"
       style={{ background: '#F8F7F4' }}
+      onMouseMove={handleMouseMove}
     >
       {/* Subtle dot grid */}
       <div
@@ -56,6 +62,7 @@ export default function Hero() {
             style={{ filter: 'url(#gooey-hero)' }}
           >
             <PixelTrail
+              ref={pixelTrailRef}
               pixelSize={screenSize.lessThan('md') ? 24 : 32}
               fadeDuration={600}
               delay={0}

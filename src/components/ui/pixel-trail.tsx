@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react'
 import { motion, useAnimationControls } from 'framer-motion'
 import { useDimensions } from '@/hooks/use-dimensions'
 
@@ -11,23 +11,24 @@ interface PixelTrailProps {
   pixelClassName?: string
 }
 
-export function PixelTrail({
-  pixelSize = 20,
-  fadeDuration = 500,
-  delay = 0,
-  className,
-  pixelClassName,
-}: PixelTrailProps) {
+export interface PixelTrailHandle {
+  handleMouseMove: (e: { clientX: number; clientY: number }) => void
+}
+
+export const PixelTrail = forwardRef<PixelTrailHandle, PixelTrailProps>(function PixelTrail(
+  { pixelSize = 20, fadeDuration = 500, delay = 0, className, pixelClassName },
+  ref
+) {
   const containerRef = useRef<HTMLDivElement>(null)
   const dimensions = useDimensions(containerRef)
   const trailId = useRef(Math.random().toString(36).slice(2))
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+  const triggerPixel = useCallback(
+    (clientX: number, clientY: number) => {
       if (!containerRef.current) return
       const rect = containerRef.current.getBoundingClientRect()
-      const x = Math.floor((e.clientX - rect.left) / pixelSize)
-      const y = Math.floor((e.clientY - rect.top) / pixelSize)
+      const x = Math.floor((clientX - rect.left) / pixelSize)
+      const y = Math.floor((clientY - rect.top) / pixelSize)
       const el = document.getElementById(`${trailId.current}-pixel-${x}-${y}`)
       if (el) {
         const fn = (el as HTMLElement & { __animatePixel?: () => void }).__animatePixel
@@ -37,13 +38,22 @@ export function PixelTrail({
     [pixelSize]
   )
 
+  useImperativeHandle(ref, () => ({
+    handleMouseMove: (e) => triggerPixel(e.clientX, e.clientY),
+  }), [triggerPixel])
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => triggerPixel(e.clientX, e.clientY),
+    [triggerPixel]
+  )
+
   const columns = useMemo(() => Math.ceil(dimensions.width / pixelSize), [dimensions.width, pixelSize])
   const rows = useMemo(() => Math.ceil(dimensions.height / pixelSize), [dimensions.height, pixelSize])
 
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 w-full h-full pointer-events-auto${className ? ` ${className}` : ''}`}
+      className={`absolute inset-0 w-full h-full pointer-events-none${className ? ` ${className}` : ''}`}
       onMouseMove={handleMouseMove}
     >
       {Array.from({ length: rows }).map((_, rowIndex) => (
@@ -62,7 +72,7 @@ export function PixelTrail({
       ))}
     </div>
   )
-}
+})
 
 interface PixelDotProps {
   id: string

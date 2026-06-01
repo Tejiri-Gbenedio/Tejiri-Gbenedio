@@ -1,11 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
 import SectionHeading from '@/components/ui/SectionHeading'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { GooeyFilter } from '@/components/ui/gooey-filter'
-import { PixelTrail } from '@/components/ui/pixel-trail'
+import { PixelTrail, type PixelTrailHandle } from '@/components/ui/pixel-trail'
 import { useScreenSize } from '@/hooks/use-screen-size'
 import { contactLinks } from '@/data'
 
@@ -25,13 +25,18 @@ const values = [
 export default function About() {
   const [isMouseDevice, setIsMouseDevice] = useState(false)
   const screenSize = useScreenSize()
+  const pixelTrailRef = useRef<PixelTrailHandle>(null)
 
   useEffect(() => {
     if (window.matchMedia('(pointer: fine)').matches) setIsMouseDevice(true)
   }, [])
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    pixelTrailRef.current?.handleMouseMove({ clientX: e.clientX, clientY: e.clientY })
+  }
+
   return (
-    <section id="about" className="relative overflow-hidden py-24 px-6" style={{ background: '#F8F7F4' }}>
+    <section id="about" className="relative overflow-hidden py-24 px-6" style={{ background: '#F8F7F4' }} onMouseMove={handleMouseMove}>
       {/* Gooey pixel trail — mouse devices only */}
       {isMouseDevice && (
         <>
@@ -41,6 +46,7 @@ export default function About() {
             style={{ filter: 'url(#gooey-about)' }}
           >
             <PixelTrail
+              ref={pixelTrailRef}
               pixelSize={screenSize.lessThan('md') ? 24 : 32}
               fadeDuration={600}
               delay={0}
