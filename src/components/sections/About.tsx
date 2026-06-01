@@ -1,8 +1,12 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
 import SectionHeading from '@/components/ui/SectionHeading'
 import MagneticButton from '@/components/ui/MagneticButton'
+import { GooeyFilter } from '@/components/ui/gooey-filter'
+import { PixelTrail } from '@/components/ui/pixel-trail'
+import { useScreenSize } from '@/hooks/use-screen-size'
 import { contactLinks } from '@/data'
 
 const stats = [
@@ -19,9 +23,35 @@ const values = [
 ]
 
 export default function About() {
+  const [isMouseDevice, setIsMouseDevice] = useState(false)
+  const screenSize = useScreenSize()
+
+  useEffect(() => {
+    if (window.matchMedia('(pointer: fine)').matches) setIsMouseDevice(true)
+  }, [])
+
   return (
-    <section id="about" className="py-24 px-6" style={{ background: '#F8F7F4' }}>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="about" className="relative overflow-hidden py-24 px-6" style={{ background: '#F8F7F4' }}>
+      {/* Gooey pixel trail — mouse devices only */}
+      {isMouseDevice && (
+        <>
+          <GooeyFilter id="gooey-about" strength={5} />
+          <div
+            className="absolute inset-0 z-[1] pointer-events-none"
+            style={{ filter: 'url(#gooey-about)' }}
+          >
+            <PixelTrail
+              pixelSize={screenSize.lessThan('md') ? 24 : 32}
+              fadeDuration={600}
+              delay={0}
+              pixelClassName="bg-[#10B981]"
+            />
+          </div>
+        </>
+      )}
+
+      {/* Content */}
+      <div className="relative z-[2] max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Text */}
         <div>
           <SectionHeading label="About Me" title="I Help Businesses Grow Online" />

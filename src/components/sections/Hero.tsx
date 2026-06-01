@@ -1,10 +1,21 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import MagneticButton from '@/components/ui/MagneticButton'
+import { GooeyFilter } from '@/components/ui/gooey-filter'
+import { PixelTrail } from '@/components/ui/pixel-trail'
+import { useScreenSize } from '@/hooks/use-screen-size'
 import { techPills, contactLinks } from '@/data'
 
 export default function Hero() {
+  const [isMouseDevice, setIsMouseDevice] = useState(false)
+  const screenSize = useScreenSize()
+
+  useEffect(() => {
+    if (window.matchMedia('(pointer: fine)').matches) setIsMouseDevice(true)
+  }, [])
+
   return (
     <section
       id="hero"
@@ -36,7 +47,26 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto w-full">
+      {/* Gooey pixel trail — mouse devices only */}
+      {isMouseDevice && (
+        <>
+          <GooeyFilter id="gooey-hero" strength={5} />
+          <div
+            className="absolute inset-0 z-[1] pointer-events-none"
+            style={{ filter: 'url(#gooey-hero)' }}
+          >
+            <PixelTrail
+              pixelSize={screenSize.lessThan('md') ? 24 : 32}
+              fadeDuration={600}
+              delay={0}
+              pixelClassName="bg-[#10B981]"
+            />
+          </div>
+        </>
+      )}
+
+      {/* Content */}
+      <div className="relative z-[2] max-w-6xl mx-auto w-full">
         {/* Available badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
