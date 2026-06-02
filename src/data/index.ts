@@ -198,7 +198,7 @@ export interface Automation {
 export const automations: Automation[] = [
   {
     id: 1,
-    title: 'AI Email Classification & Triage',
+    title: 'AI Email Classification',
     icon: 'Mail',
     tagline: 'Auto-sorts and routes your inbox before a human ever reads it.',
     tools: ['n8n', 'GPT-4.1-mini', 'Gmail', 'Airtable'],

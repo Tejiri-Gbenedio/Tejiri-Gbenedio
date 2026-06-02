@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import CustomCursor from '@/components/CustomCursor'
 import AutomationDetailCard from '@/components/ui/AutomationDetailCard'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { automations, contactLinks } from '@/data'
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function AutomationsPage() {
   return (
     <>
+      <CustomCursor />
       <Navbar />
       <main style={{ background: '#F8F7F4' }}>
         {/* Page header */}
