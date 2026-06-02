@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar'
 import CustomCursor from '@/components/CustomCursor'
 import Hero from '@/components/sections/Hero'
 import Projects from '@/components/sections/Projects'
+import Automations from '@/components/sections/Automations'
 import Services from '@/components/sections/Services'
 import Testimonials from '@/components/sections/Testimonials'
 import About from '@/components/sections/About'
@@ -22,6 +23,7 @@ export default function Home() {
       <main id="main-content">
         <Hero />
         <Projects />
+        <Automations />
         <Services />
         <Testimonials />
         <About />
