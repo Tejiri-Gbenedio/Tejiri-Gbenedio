@@ -2,13 +2,15 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import Link from 'next/link'
 
 const links = [
-  { label: 'Home', href: '#hero' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '#hero', isAnchor: true },
+  { label: 'Projects', href: '#projects', isAnchor: true },
+  { label: 'Automations', href: '/automations', isAnchor: false },
+  { label: 'Services', href: '#services', isAnchor: true },
+  { label: 'About', href: '#about', isAnchor: true },
+  { label: 'Contact', href: '#contact', isAnchor: true },
 ]
 
 export default function Navbar() {
@@ -40,13 +42,23 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <li key={l.href}>
-              <button
-                onClick={() => scrollTo(l.href)}
-                className="text-sm transition-colors duration-200 hover:text-[#10B981]"
-                style={{ color: '#6B7280' }}
-              >
-                {l.label}
-              </button>
+              {l.isAnchor ? (
+                <button
+                  onClick={() => scrollTo(l.href)}
+                  className="text-sm transition-colors duration-200 hover:text-[#10B981]"
+                  style={{ color: '#6B7280' }}
+                >
+                  {l.label}
+                </button>
+              ) : (
+                <Link
+                  href={l.href}
+                  className="text-sm transition-colors duration-200 hover:text-[#10B981]"
+                  style={{ color: '#6B7280' }}
+                >
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
@@ -85,13 +97,24 @@ export default function Navbar() {
             <ul className="px-6 py-5 space-y-4">
               {links.map((l) => (
                 <li key={l.href}>
-                  <button
-                    onClick={() => scrollTo(l.href)}
-                    className="text-base w-full text-left transition-colors hover:text-[#10B981]"
-                    style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
-                  >
-                    {l.label}
-                  </button>
+                  {l.isAnchor ? (
+                    <button
+                      onClick={() => scrollTo(l.href)}
+                      className="text-base w-full text-left transition-colors hover:text-[#10B981]"
+                      style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
+                    >
+                      {l.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="text-base block w-full transition-colors hover:text-[#10B981]"
+                      style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
+                    >
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
               <li>
