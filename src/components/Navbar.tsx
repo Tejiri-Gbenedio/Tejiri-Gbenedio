@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const links = [
   { label: 'Home', href: '#hero', isAnchor: true },
@@ -16,6 +17,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40)
@@ -23,9 +25,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  const scrollTo = (href: string) => {
+  const handleAnchorClick = (href: string) => {
     setOpen(false)
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    if (pathname === '/') {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      window.location.href = '/' + href
+    }
   }
 
   return (
@@ -34,7 +40,7 @@ export default function Navbar() {
       style={{ background: scrolled ? 'rgba(250,249,246,0.92)' : 'transparent', backdropFilter: scrolled ? 'blur(12px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none', boxShadow: scrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none' }}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
-        <button onClick={() => scrollTo('#hero')} className="font-extrabold text-lg" style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}>
+        <button onClick={() => handleAnchorClick('#hero')} className="font-extrabold text-lg" style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}>
           Tejiri<span style={{ color: '#C9A43E' }}>.Dev</span>
         </button>
 
@@ -44,7 +50,7 @@ export default function Navbar() {
             <li key={l.href}>
               {l.isAnchor ? (
                 <button
-                  onClick={() => scrollTo(l.href)}
+                  onClick={() => handleAnchorClick(l.href)}
                   className="text-sm transition-colors duration-200 hover:text-[#10B981]"
                   style={{ color: '#6B7280' }}
                 >
@@ -64,7 +70,7 @@ export default function Navbar() {
         </ul>
 
         <button
-          onClick={() => scrollTo('#contact')}
+          onClick={() => handleAnchorClick('#contact')}
           className="hidden md:inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
           style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
         >
@@ -99,7 +105,7 @@ export default function Navbar() {
                 <li key={l.href}>
                   {l.isAnchor ? (
                     <button
-                      onClick={() => scrollTo(l.href)}
+                      onClick={() => handleAnchorClick(l.href)}
                       className="text-base w-full text-left transition-colors hover:text-[#10B981]"
                       style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
                     >
@@ -119,7 +125,7 @@ export default function Navbar() {
               ))}
               <li>
                 <button
-                  onClick={() => scrollTo('#contact')}
+                  onClick={() => handleAnchorClick('#contact')}
                   className="w-full mt-2 py-3 rounded-full text-sm font-semibold text-white"
                   style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
                 >
