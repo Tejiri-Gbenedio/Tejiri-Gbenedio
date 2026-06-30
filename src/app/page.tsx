@@ -6,6 +6,7 @@ import Automations from '@/components/sections/Automations'
 import Services from '@/components/sections/Services'
 import Testimonials from '@/components/sections/Testimonials'
 import About from '@/components/sections/About'
+import CV from '@/components/sections/CV'
 import Contact from '@/components/sections/Contact'
 import Footer from '@/components/Footer'
 
@@ -27,6 +28,7 @@ export default function Home() {
         <Services />
         <Testimonials />
         <About />
+        <CV />
         <Contact />
       </main>
       <Footer />

@@ -1,8 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-const SCREEN_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const
-export type ScreenSize = (typeof SCREEN_SIZES)[number]
+export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 const sizeOrder: Record<ScreenSize, number> = {
   xs: 0, sm: 1, md: 2, lg: 3, xl: 4, '2xl': 5,

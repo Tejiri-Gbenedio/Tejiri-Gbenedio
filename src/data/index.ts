@@ -184,6 +184,17 @@ export const contactLinks = {
   github: 'https://github.com/Tejiri-Gbenedio',
 }
 
+export const cv = {
+  title: 'Tejiri Gbenedio CV',
+  role: 'AI Automation Specialist / Full-Stack Web Developer',
+  summary:
+    'A concise overview of my automation, web development, project management, and creative experience for recruiters, clients, and collaborators.',
+  file: '/tejiri-gbenedio-cv.pdf',
+  previewImage: '/tejiri-gbenedio-cv-preview-1.png',
+  fileName: 'Tejiri-Gbenedio-CV.pdf',
+  updated: 'April 2026',
+}
+
 export interface Automation {
   id: number
   title: string

@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "clone-workspace/**",
+    ".playwright-mcp/**",
+    "Cv/**",
+    "cv/**",
+    "n8n automation screenshots & summary/**",
   ]),
 ]);
 

@@ -12,6 +12,13 @@
 
 # testing
 /coverage
+/.playwright-mcp
+
+# local scratch/source folders
+/clone-workspace
+/Cv
+/cv
+/n8n automation screenshots & summary
 
 # next.js
 /.next/

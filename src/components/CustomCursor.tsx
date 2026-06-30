@@ -17,7 +17,7 @@ export default function CustomCursor() {
   useEffect(() => {
     // Only activate on devices with a precise pointer (mouse/trackpad)
     if (!window.matchMedia('(pointer: fine)').matches) return
-    setIsMouseDevice(true)
+    const raf = window.requestAnimationFrame(() => setIsMouseDevice(true))
 
     const onMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
@@ -32,6 +32,7 @@ export default function CustomCursor() {
     window.addEventListener('mousedown', onDown)
     window.addEventListener('mouseup', onUp)
     return () => {
+      window.cancelAnimationFrame(raf)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)

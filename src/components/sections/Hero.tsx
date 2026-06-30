@@ -14,7 +14,9 @@ export default function Hero() {
   const pixelTrailRef = useRef<PixelTrailHandle>(null)
 
   useEffect(() => {
-    if (window.matchMedia('(pointer: fine)').matches) setIsMouseDevice(true)
+    if (!window.matchMedia('(pointer: fine)').matches) return
+    const raf = window.requestAnimationFrame(() => setIsMouseDevice(true))
+    return () => window.cancelAnimationFrame(raf)
   }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {

@@ -11,6 +11,7 @@ const links = [
   { label: 'Automations', href: '/automations', isAnchor: false },
   { label: 'Services', href: '#services', isAnchor: true },
   { label: 'About', href: '#about', isAnchor: true },
+  { label: 'CV', href: '#cv', isAnchor: true },
   { label: 'Contact', href: '#contact', isAnchor: true },
 ]
 
