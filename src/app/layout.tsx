@@ -1,26 +1,17 @@
 import type { Metadata } from 'next'
-import { Syne, Inter, Fraunces } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
+import MotionProvider from '@/components/MotionProvider'
 import './globals.css'
 
-const syne = Syne({
+const geistSans = Geist({
   subsets: ['latin'],
-  variable: '--font-syne',
-  weight: ['400', '600', '700', '800'],
+  variable: '--font-geist-sans',
   display: 'swap',
 })
 
-const inter = Inter({
+const geistMono = Geist_Mono({
   subsets: ['latin'],
-  variable: '--font-inter',
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-})
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
-  weight: ['700', '900'],
-  style: ['normal', 'italic'],
+  variable: '--font-geist-mono',
   display: 'swap',
 })
 
@@ -47,8 +38,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${inter.variable} ${fraunces.variable}`}>
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   )

@@ -19,22 +19,22 @@ function LinkedinIcon() {
 
 export default function Footer() {
   return (
-    <footer className="py-10 px-6" style={{ background: '#0F172A' }}>
+    <footer className="py-12 px-6" style={{ background: 'var(--color-footer)' }}>
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="font-extrabold text-lg text-white" style={{ fontFamily: 'var(--font-syne)' }}>
-          Tejiri<span style={{ color: '#C9A43E' }}>.Dev</span>
+        <p className="text-lg font-bold tracking-tight text-white" style={{ fontFamily: 'var(--font-geist-sans)' }}>
+          Tejiri<span style={{ color: 'var(--color-accent-bright)' }}>.Dev</span>
         </p>
-        <p className="text-sm text-center" style={{ color: 'rgba(255,255,255,0.60)' }}>
-          © {new Date().getFullYear()} Tejiri Gbenedio · AI Automation & Full-Stack Web Developer
+        <p className="text-sm text-center" style={{ color: 'rgba(255,255,255,0.55)' }}>
+          © {new Date().getFullYear()} Tejiri Gbenedio · AI Automation &amp; Full-Stack Web Developer
         </p>
-        <div className="flex items-center gap-5">
-          <a href={contactLinks.github} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#10B981] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="GitHub profile (opens in new tab)">
+        <div className="flex items-center gap-3">
+          <a href={contactLinks.github} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#D97A4D] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="GitHub profile (opens in new tab)">
             <GithubIcon />
           </a>
-          <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#10B981] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="LinkedIn profile (opens in new tab)">
+          <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#D97A4D] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="LinkedIn profile (opens in new tab)">
             <LinkedinIcon />
           </a>
-          <a href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#10B981] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="WhatsApp contact (opens in new tab)">
+          <a href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#D97A4D] p-2" style={{ color: 'rgba(255,255,255,0.65)' }} aria-label="WhatsApp contact (opens in new tab)">
             <MessageCircle size={18} aria-hidden="true" />
           </a>
         </div>

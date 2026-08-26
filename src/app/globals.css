@@ -1,32 +1,33 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #F8F7F4;
-  --color-surface: #FAFAF8;
-  --color-text-primary: #111827;
-  --color-text-muted: #64748B;
-  --color-accent: #10B981;
-  --color-accent-dark: #059669;
-  --color-accent-light: #D1FAE5;
-  --color-gold: #C9A43E;
-  --color-gold-light: #FDF3D7;
-  --color-shadow-black: #0F172A;
+  /* Surfaces — warm paper */
+  --color-canvas: #FAF8F5;
+  --color-surface-alt: #F3EFE9;
+  --color-card: #FFFFFF;
 
-  --font-heading: var(--font-syne), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-display: var(--font-fraunces), serif;
+  /* Ink */
+  --color-ink: #1C1917;
+  --color-muted: #6B6560;
+  --color-subtle: #9A938C;
 
-  --animate-float: float 6s ease-in-out infinite;
-}
+  /* Hairlines */
+  --color-border: #E7E1D8;
+  --color-border-strong: #DCD3C6;
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
+  /* Accent — terracotta */
+  --color-accent: #C9622E;
+  --color-accent-bright: #D97A4D;
+  --color-accent-hover: #8A4A2A;
+  --color-accent-ink: #9A481F;
+  --color-accent-soft: #FBEEE4;
 
-@keyframes gradientFlow {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  /* Footer / warm dark */
+  --color-footer: #1C1917;
+
+  /* Type */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", "Menlo", monospace;
 }
 
 html {
@@ -35,33 +36,43 @@ html {
 }
 
 body {
-  background-color: #F8F7F4;
-  color: #111827;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  caret-color: var(--color-accent);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (pointer: fine) {
-  html, body, *, *::before, *::after {
-    cursor: none !important;
-  }
+/* Browser surfaces themed from the palette */
+::selection {
+  background: rgba(201, 98, 46, 0.18);
+  color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid #10B981;
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #F8F7F4; }
-::-webkit-scrollbar-thumb { background: #10B981; border-radius: 3px; }
-
-/* Video/gradient text mask */
-.text-clip {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-canvas); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border: 3px solid var(--color-canvas);
+  border-radius: 999px;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
+/* Respect reduced-motion for CSS animations, transitions, and smooth scroll.
+   framer-motion is handled via MotionConfig reducedMotion="user". */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

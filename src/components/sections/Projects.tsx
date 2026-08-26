@@ -9,10 +9,9 @@ export default function Projects() {
   const portraitProject = projects.find(p => p.id === portraitId)
 
   return (
-    <section id="projects" className="py-24 px-6" style={{ background: '#F8F7F4' }}>
+    <section id="projects" className="py-24 px-6" style={{ background: 'var(--color-canvas)' }}>
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="Featured Work"
           title="Projects That Drive Results"
           subtitle="Each project is a full case study — the client's need, my solution, and the outcome."
         />

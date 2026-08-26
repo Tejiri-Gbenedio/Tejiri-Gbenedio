@@ -2,35 +2,38 @@
 import { motion } from 'framer-motion'
 
 interface Props {
-  label: string
+  /** Deprecated: eyebrows are no longer rendered. Kept optional for caller compatibility. */
+  label?: string
   title: string
   subtitle?: string
   centered?: boolean
 }
 
-export default function SectionHeading({ label, title, subtitle, centered = false }: Props) {
+export default function SectionHeading({ title, subtitle, centered = false }: Props) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`mb-12 ${centered ? 'text-center' : ''}`}
     >
-      <span
-        className="inline-block text-sm font-semibold uppercase tracking-widest mb-3"
-        style={{ color: '#C9A43E', fontFamily: 'var(--font-syne)' }}
-      >
-        {label}
-      </span>
       <h2
-        className="font-extrabold text-4xl md:text-5xl leading-tight"
-        style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}
+        className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.08]"
+        style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}
       >
         {title}
       </h2>
+      <div
+        aria-hidden
+        className={`mt-5 h-0.5 w-12 rounded-full ${centered ? 'mx-auto' : ''}`}
+        style={{ background: 'var(--color-accent)' }}
+      />
       {subtitle && (
-        <p className="mt-4 text-lg max-w-2xl leading-relaxed" style={{ color: '#6B7280' }}>
+        <p
+          className={`mt-5 text-lg leading-relaxed max-w-2xl ${centered ? 'mx-auto' : ''}`}
+          style={{ color: 'var(--color-muted)' }}
+        >
           {subtitle}
         </p>
       )}

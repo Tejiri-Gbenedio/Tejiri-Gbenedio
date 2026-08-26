@@ -38,11 +38,20 @@ export default function Navbar() {
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{ background: scrolled ? 'rgba(250,249,246,0.92)' : 'transparent', backdropFilter: scrolled ? 'blur(12px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none', boxShadow: scrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none' }}
+      style={{
+        background: scrolled ? 'rgba(250,248,245,0.85)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
+      }}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
-        <button onClick={() => handleAnchorClick('#hero')} className="font-extrabold text-lg" style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}>
-          Tejiri<span style={{ color: '#C9A43E' }}>.Dev</span>
+        <button
+          onClick={() => handleAnchorClick('#hero')}
+          className="text-lg font-bold tracking-tight"
+          style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}
+        >
+          Tejiri<span style={{ color: 'var(--color-accent-ink)' }}>.Dev</span>
         </button>
 
         {/* Desktop */}
@@ -52,16 +61,16 @@ export default function Navbar() {
               {l.isAnchor ? (
                 <button
                   onClick={() => handleAnchorClick(l.href)}
-                  className="text-sm transition-colors duration-200 hover:text-[#10B981]"
-                  style={{ color: '#6B7280' }}
+                  className="text-sm transition-colors duration-200 hover:text-[#C9622E]"
+                  style={{ color: 'var(--color-muted)' }}
                 >
                   {l.label}
                 </button>
               ) : (
                 <Link
                   href={l.href}
-                  className="text-sm transition-colors duration-200 hover:text-[#10B981]"
-                  style={{ color: '#6B7280' }}
+                  className="text-sm transition-colors duration-200 hover:text-[#C9622E]"
+                  style={{ color: 'var(--color-muted)' }}
                 >
                   {l.label}
                 </Link>
@@ -72,8 +81,8 @@ export default function Navbar() {
 
         <button
           onClick={() => handleAnchorClick('#contact')}
-          className="hidden md:inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
+          className="hidden md:inline-flex items-center px-5 py-2 rounded-[10px] text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#8A4A2A]"
+          style={{ background: 'var(--color-accent)', fontFamily: 'var(--font-geist-sans)' }}
         >
           Hire Me
         </button>
@@ -81,7 +90,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           className="md:hidden"
-          style={{ color: '#111827' }}
+          style={{ color: 'var(--color-ink)' }}
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -99,7 +108,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden overflow-hidden border-t"
-            style={{ background: '#FAFAF8', borderColor: '#F3F4F6' }}
+            style={{ background: 'var(--color-canvas)', borderColor: 'var(--color-border)' }}
           >
             <ul className="px-6 py-5 space-y-4">
               {links.map((l) => (
@@ -107,8 +116,8 @@ export default function Navbar() {
                   {l.isAnchor ? (
                     <button
                       onClick={() => handleAnchorClick(l.href)}
-                      className="text-base w-full text-left transition-colors hover:text-[#10B981]"
-                      style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
+                      className="text-base w-full text-left transition-colors hover:text-[#C9622E]"
+                      style={{ color: 'var(--color-ink)', fontFamily: 'var(--font-geist-sans)' }}
                     >
                       {l.label}
                     </button>
@@ -116,8 +125,8 @@ export default function Navbar() {
                     <Link
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="text-base block w-full transition-colors hover:text-[#10B981]"
-                      style={{ color: '#111827', fontFamily: 'var(--font-syne)' }}
+                      className="text-base block w-full transition-colors hover:text-[#C9622E]"
+                      style={{ color: 'var(--color-ink)', fontFamily: 'var(--font-geist-sans)' }}
                     >
                       {l.label}
                     </Link>
@@ -127,8 +136,8 @@ export default function Navbar() {
               <li>
                 <button
                   onClick={() => handleAnchorClick('#contact')}
-                  className="w-full mt-2 py-3 rounded-full text-sm font-semibold text-white"
-                  style={{ background: '#10B981', fontFamily: 'var(--font-syne)' }}
+                  className="w-full mt-2 py-3 rounded-[10px] text-sm font-semibold text-white"
+                  style={{ background: 'var(--color-accent)', fontFamily: 'var(--font-geist-sans)' }}
                 >
                   Hire Me
                 </button>

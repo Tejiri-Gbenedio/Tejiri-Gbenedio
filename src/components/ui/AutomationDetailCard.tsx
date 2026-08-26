@@ -1,18 +1,8 @@
 'use client'
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Lightbulb } from 'lucide-react'
 import type { Automation } from '@/data'
-
-const shadowFloat1 = {
-  x: [-15, 2, 13, -15, 11, -1, -15],
-  y: [-15, -4, -7, 15, -3, 11, -15],
-}
-const shadowFloat2 = {
-  x: [15, -10, 3, 15, -2, -12, 15],
-  y: [15, -6, 9, -15, 6, -8, 15],
-}
 
 interface Props {
   automation: Automation
@@ -20,53 +10,35 @@ interface Props {
 }
 
 export default function AutomationDetailCard({ automation, index }: Props) {
-  const [imageHovered, setImageHovered] = useState(false)
   const isEven = index % 2 === 1
 
   const imageBlock = (
-    <div
-      className="relative w-full lg:w-1/2 shrink-0"
-      style={{ isolation: 'isolate', minHeight: '320px' }}
-      onMouseEnter={() => setImageHovered(true)}
-      onMouseLeave={() => setImageHovered(false)}
-    >
-      {/* Shadow layer 1 — emerald */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl"
-        style={{ background: 'rgba(16,185,129,0.5)', zIndex: 0 }}
-        animate={imageHovered ? shadowFloat1 : { x: 0, y: 0 }}
-        transition={imageHovered ? { duration: 3, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
-      />
-      {/* Shadow layer 2 — gold */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl"
-        style={{ background: 'rgba(201,164,62,0.5)', zIndex: 0 }}
-        animate={imageHovered ? shadowFloat2 : { x: 0, y: 0 }}
-        transition={imageHovered ? { duration: 3.5, repeat: Infinity, ease: 'linear' } : { duration: 0.5 }}
-      />
-      {/* Image */}
-      <motion.div
-        className="relative overflow-hidden rounded-2xl"
-        style={{ minHeight: '320px', zIndex: 1, background: '#EDECEA' }}
-        animate={{ scale: imageHovered ? [1, 1.03, 0.98, 1] : 1 }}
-        transition={{ duration: 0.4, times: [0, 0.33, 0.66, 1] }}
+    <div className="group/img relative w-full lg:w-1/2 shrink-0">
+      <div
+        className="relative overflow-hidden rounded-2xl border transition-all duration-300"
+        style={{
+          minHeight: '320px',
+          background: 'var(--color-surface-alt)',
+          borderColor: 'var(--color-border)',
+          boxShadow: '0 20px 48px -22px rgba(28,25,23,0.22)',
+        }}
       >
         <Image
           src={automation.image}
           alt={`${automation.title} workflow screenshot`}
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-contain p-4"
+          className="object-contain p-4 transition-transform duration-500 group-hover/img:scale-[1.02]"
         />
-      </motion.div>
+      </div>
     </div>
   )
 
   const textBlock = (
     <div className="flex-1 flex flex-col justify-center py-4">
       <h2
-        className="font-extrabold text-2xl md:text-3xl mb-3 leading-tight"
-        style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}
+        className="font-semibold text-2xl md:text-3xl mb-3 leading-tight tracking-tight"
+        style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}
       >
         {automation.title}
       </h2>
@@ -76,8 +48,8 @@ export default function AutomationDetailCard({ automation, index }: Props) {
         {automation.tools.map((tool) => (
           <span
             key={tool}
-            className="text-xs px-2.5 py-1 rounded-full font-mono"
-            style={{ background: '#F3F4F6', color: '#4B5563' }}
+            className="text-xs px-2.5 py-1 rounded-md border"
+            style={{ background: 'var(--color-surface-alt)', borderColor: 'var(--color-border)', color: 'var(--color-muted)', fontFamily: 'var(--font-mono)' }}
           >
             {tool}
           </span>
@@ -87,7 +59,7 @@ export default function AutomationDetailCard({ automation, index }: Props) {
       {/* Description — split on double newline */}
       <div className="space-y-3 mb-6">
         {automation.description.split('\n\n').map((para, i) => (
-          <p key={i} className="text-sm leading-relaxed" style={{ color: '#374151' }}>
+          <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>
             {para}
           </p>
         ))}
@@ -95,21 +67,18 @@ export default function AutomationDetailCard({ automation, index }: Props) {
 
       {/* Business Impact callout */}
       <div
-        className="flex gap-3 p-4 rounded-xl"
-        style={{
-          background: 'rgba(16,185,129,0.07)',
-          borderLeft: '3px solid #10B981',
-        }}
+        className="flex gap-3 p-4 rounded-xl border"
+        style={{ background: 'var(--color-accent-soft)', borderColor: 'rgba(154,72,31,0.16)' }}
       >
-        <Lightbulb size={16} className="shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+        <Lightbulb size={16} className="shrink-0 mt-0.5" style={{ color: 'var(--color-accent-ink)' }} />
         <div>
           <p
-            className="text-xs font-semibold uppercase tracking-wider mb-1"
-            style={{ color: '#10B981', fontFamily: 'var(--font-syne)' }}
+            className="text-[11px] font-semibold uppercase tracking-wider mb-1"
+            style={{ color: 'var(--color-accent-ink)', fontFamily: 'var(--font-mono)' }}
           >
             Business Impact
           </p>
-          <p className="text-sm leading-relaxed italic" style={{ color: '#374151' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-ink)' }}>
             {automation.businessImpact}
           </p>
         </div>

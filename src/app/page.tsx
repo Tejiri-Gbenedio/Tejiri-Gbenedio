@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar'
-import CustomCursor from '@/components/CustomCursor'
 import Hero from '@/components/sections/Hero'
 import Projects from '@/components/sections/Projects'
 import Automations from '@/components/sections/Automations'
@@ -19,7 +18,6 @@ export default function Home() {
       >
         Skip to main content
       </a>
-      <CustomCursor />
       <Navbar />
       <main id="main-content">
         <Hero />

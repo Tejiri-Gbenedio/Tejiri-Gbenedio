@@ -28,26 +28,26 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
       whileHover={{ y: -4 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="p-6 rounded-2xl border transition-all duration-300 cursor-default"
+      className="p-6 rounded-2xl transition-all duration-300 cursor-default"
       style={{
-        background: '#F8F7F4',
-        borderColor: hovered ? '#10B98166' : '#F3F4F6',
-        boxShadow: hovered ? '0 8px 30px rgba(16,185,129,0.08)' : 'none',
+        background: 'var(--color-card)',
+        border: `1px solid ${hovered ? 'var(--color-border-strong)' : 'var(--color-border)'}`,
+        boxShadow: hovered ? '0 16px 36px -14px rgba(28,25,23,0.16)' : '0 1px 2px rgba(28,25,23,0.04)',
       }}
     >
       <div
         className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
         style={{
-          background: hovered ? '#10B981' : '#D1FAE5',
-          color: hovered ? '#fff' : '#10B981',
+          background: hovered ? 'var(--color-accent)' : 'var(--color-accent-soft)',
+          color: hovered ? '#fff' : 'var(--color-accent-ink)',
         }}
       >
         {iconMap[service.icon]}
       </div>
-      <h3 className="font-bold text-base mb-2" style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}>
+      <h3 className="text-base font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}>
         {service.title}
       </h3>
-      <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>
+      <p className="text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>
         {service.description}
       </p>
     </motion.div>
@@ -56,10 +56,9 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 px-6" style={{ background: '#FAFAF8' }}>
+    <section id="services" className="py-24 px-6" style={{ background: 'var(--color-canvas)' }}>
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="What I Do"
           title="Services That Grow Your Business"
           subtitle="From a simple landing page to a full AI-powered platform — I build what your business needs to thrive online."
         />

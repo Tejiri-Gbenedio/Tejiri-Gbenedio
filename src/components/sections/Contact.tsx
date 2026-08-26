@@ -54,10 +54,9 @@ const channels = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6" style={{ background: '#F8F7F4' }}>
+    <section id="contact" className="py-24 px-6" style={{ background: 'var(--color-canvas)' }}>
       <div className="max-w-4xl mx-auto text-center">
         <SectionHeading
-          label="Get In Touch"
           title="Ready to Build Something Great?"
           subtitle="Tell me about your project and let's figure out the best way to bring it to life."
           centered
@@ -88,30 +87,30 @@ export default function Contact() {
               transition={{ duration: 0.4, delay: i * 0.08 }}
               whileHover={{ y: -2 }}
               className="group flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300"
-              style={{ background: '#FAFAF8', borderColor: '#F3F4F6' }}
+              style={{ background: 'var(--color-card)', borderColor: 'var(--color-border)' }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = '#10B98166'
-                e.currentTarget.style.boxShadow = '0 8px 30px rgba(16,185,129,0.08)'
+                e.currentTarget.style.borderColor = 'var(--color-border-strong)'
+                e.currentTarget.style.boxShadow = '0 16px 36px -14px rgba(28,25,23,0.16)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = '#F3F4F6'
+                e.currentTarget.style.borderColor = 'var(--color-border)'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: '#D1FAE5', color: '#10B981' }}
+                style={{ background: 'var(--color-accent-soft)', color: 'var(--color-accent-ink)' }}
               >
                 {ch.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-sm mb-0.5" style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}>
+                <p className="font-semibold text-sm mb-0.5" style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}>
                   {ch.label}
                 </p>
-                <p className="text-sm font-medium mb-0.5 truncate" style={{ color: '#10B981' }}>{ch.value}</p>
-                <p className="text-xs" style={{ color: '#9CA3AF' }}>{ch.description}</p>
+                <p className="text-sm font-medium mb-0.5 truncate" style={{ color: 'var(--color-accent-ink)' }}>{ch.value}</p>
+                <p className="text-xs" style={{ color: 'var(--color-subtle)' }}>{ch.description}</p>
               </div>
-              <ArrowUpRight size={15} className="mt-1 shrink-0 transition-colors duration-200 group-hover:text-[#10B981]" style={{ color: '#9CA3AF' }} />
+              <ArrowUpRight size={15} className="mt-1 shrink-0 transition-colors duration-200 group-hover:text-[#C9622E]" style={{ color: 'var(--color-subtle)' }} />
             </motion.a>
           ))}
         </div>

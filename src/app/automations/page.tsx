@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import CustomCursor from '@/components/CustomCursor'
 import AutomationDetailCard from '@/components/ui/AutomationDetailCard'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { automations, contactLinks } from '@/data'
@@ -15,29 +14,24 @@ export const metadata: Metadata = {
 export default function AutomationsPage() {
   return (
     <>
-      <CustomCursor />
       <Navbar />
-      <main style={{ background: '#F8F7F4' }}>
+      <main style={{ background: 'var(--color-canvas)' }}>
         {/* Page header */}
         <section className="pt-32 pb-16 px-6">
           <div className="max-w-6xl mx-auto">
-            <span
-              className="inline-block text-sm font-semibold uppercase tracking-widest mb-3"
-              style={{ color: '#C9A43E', fontFamily: 'var(--font-syne)' }}
-            >
-              WHAT I BUILD WITH AI
-            </span>
             <h1
-              className="font-black leading-tight mb-4"
+              className="leading-tight mb-4"
               style={{
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-geist-sans)',
+                fontWeight: 700,
+                letterSpacing: '-0.03em',
                 fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                color: '#111827',
+                color: 'var(--color-ink)',
               }}
             >
               AI Automations
             </h1>
-            <p className="text-lg max-w-2xl leading-relaxed" style={{ color: '#6B7280' }}>
+            <p className="text-lg max-w-2xl leading-relaxed" style={{ color: 'var(--color-muted)' }}>
               Workflows I&apos;ve built that run real businesses — handling emails, calls, orders,
               and job applications automatically, without human intervention.
             </p>
@@ -51,7 +45,7 @@ export default function AutomationsPage() {
               <div key={automation.id}>
                 <AutomationDetailCard automation={automation} index={i} />
                 {i < automations.length - 1 && (
-                  <hr className="mt-20" style={{ borderColor: '#E5E7EB' }} />
+                  <hr className="mt-20" style={{ borderColor: 'var(--color-border)' }} />
                 )}
               </div>
             ))}
@@ -61,16 +55,16 @@ export default function AutomationsPage() {
         {/* Bottom CTA */}
         <section
           className="py-20 px-6 text-center"
-          style={{ background: '#FAFAF8', borderTop: '1px solid #E5E7EB' }}
+          style={{ background: 'var(--color-surface-alt)', borderTop: '1px solid var(--color-border)' }}
         >
           <div className="max-w-xl mx-auto">
             <h2
-              className="font-extrabold text-3xl mb-4"
-              style={{ fontFamily: 'var(--font-syne)', color: '#111827' }}
+              className="font-semibold text-3xl mb-4 tracking-tight"
+              style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}
             >
               Ready to automate your business?
             </h2>
-            <p className="mb-8 leading-relaxed" style={{ color: '#6B7280' }}>
+            <p className="mb-8 leading-relaxed" style={{ color: 'var(--color-muted)' }}>
               Let&apos;s talk about what processes are eating your team&apos;s time and how an automation can fix it.
             </p>
             <MagneticButton href={contactLinks.whatsapp} variant="primary">
