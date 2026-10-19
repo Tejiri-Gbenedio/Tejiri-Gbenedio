@@ -4,7 +4,7 @@ import ProjectCard from '@/components/ui/ProjectCard'
 import { projects } from '@/data'
 
 export default function Projects() {
-  const portraitId = 4
+  const portraitId = 'mamatees-ai-ordering'
   const gridProjects = projects.filter(p => p.id !== portraitId)
   const portraitProject = projects.find(p => p.id === portraitId)
 
@@ -19,13 +19,13 @@ export default function Projects() {
         {/* Regular 2-col grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
           {gridProjects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ProjectCard key={project.id} project={project as any} index={i} />
           ))}
         </div>
 
         {/* Mama Tee — full-width portrait card */}
         {portraitProject && (
-          <ProjectCard project={portraitProject} index={gridProjects.length} portrait />
+          <ProjectCard project={portraitProject as any} index={gridProjects.length} portrait />
         )}
       </div>
     </section>

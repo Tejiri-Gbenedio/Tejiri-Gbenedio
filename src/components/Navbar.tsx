@@ -1,148 +1,175 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
 
-const links = [
-  { label: 'Home', href: '#hero', isAnchor: true },
-  { label: 'Projects', href: '#projects', isAnchor: true },
-  { label: 'Automations', href: '/automations', isAnchor: false },
-  { label: 'Services', href: '#services', isAnchor: true },
-  { label: 'About', href: '#about', isAnchor: true },
-  { label: 'CV', href: '#cv', isAnchor: true },
-  { label: 'Contact', href: '#contact', isAnchor: true },
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Automations', href: '/automations' },
+  { label: 'Services', href: '/services' },
+  { label: 'About', href: '/about' },
+  { label: 'CV', href: '/cv' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleAnchorClick = (href: string) => {
-    setOpen(false)
-    if (pathname === '/') {
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      window.location.href = '/' + href
-    }
-  }
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        background: scrolled ? 'rgba(250,248,245,0.85)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
-      }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#0A0A0B]/90 backdrop-blur-md border-b border-[#222226] py-4'
+          : 'bg-transparent border-b border-transparent py-6'
+      }`}
     >
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        {/* Left: Brand + Status Pill */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <Link
+            href="/"
+            className="group flex items-center gap-1 text-xl md:text-2xl font-bold tracking-tight text-[#F4F4F0] transition-colors"
+          >
+            <span>Tejiri</span>
+            <span className="text-[#D4AF37] transition-colors group-hover:text-[#E5A93C]">.Dev</span>
+          </Link>
+
+          {/* Availability Pill */}
+          <div
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#222226] bg-[#121214]/90 text-xs md:text-sm font-sans font-medium text-[#A1A1AA]"
+            title="Available for high-impact contracts & full-stack AI systems"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+            </span>
+            <span className="hidden sm:inline">Live · Available for Projects</span>
+            <span className="sm:hidden">Available</span>
+          </div>
+        </div>
+
+        {/* Desktop Nav Links: Title Case, font-sans, text-[15px] md:text-base font-medium */}
+        <nav className="hidden lg:flex items-center gap-1 bg-[#121214]/75 border border-[#222226] px-4 py-1.5 rounded-full backdrop-blur-md">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === '/'
+                ? pathname === '/'
+                : pathname?.startsWith(link.href)
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative px-4 py-2 font-sans text-[15px] md:text-base font-medium tracking-normal transition-colors duration-200 rounded-full ${
+                  isActive
+                    ? 'text-[#F4F4F0] font-semibold'
+                    : 'text-[#A1A1AA] hover:text-[#F4F4F0]'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="navbar-active-pill"
+                    className="absolute inset-0 bg-[#18181B] border border-[#323238] rounded-full -z-10 shadow-sm"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {link.label}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* Right Desktop CTA: text-xs md:text-sm with generous padding */}
+        <div className="hidden lg:flex items-center gap-4">
+          <a
+            href="https://wa.me/2347084721120"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs md:text-sm font-sans font-semibold bg-[#D4AF37] text-[#0A0A0B] hover:bg-[#E5A93C] transition-all duration-200 active:scale-95 shadow-[0_0_20px_rgba(212,175,55,0.18)]"
+          >
+            <span>Let&apos;s Have A Talk</span>
+            <ArrowUpRight size={16} className="text-[#0A0A0B]" />
+          </a>
+        </div>
+
+        {/* Mobile Hamburger Button */}
         <button
-          onClick={() => handleAnchorClick('#hero')}
-          className="text-lg font-bold tracking-tight"
-          style={{ fontFamily: 'var(--font-geist-sans)', color: 'var(--color-ink)' }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden p-2.5 text-[#A1A1AA] hover:text-[#F4F4F0] border border-[#222226] bg-[#121214] rounded-lg transition-colors"
+          aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+          aria-expanded={mobileMenuOpen}
         >
-          Tejiri<span style={{ color: 'var(--color-accent-ink)' }}>.Dev</span>
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
+      </div>
 
-        {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <li key={l.href}>
-              {l.isAnchor ? (
-                <button
-                  onClick={() => handleAnchorClick(l.href)}
-                  className="text-sm transition-colors duration-200 hover:text-[#C9622E]"
-                  style={{ color: 'var(--color-muted)' }}
-                >
-                  {l.label}
-                </button>
-              ) : (
-                <Link
-                  href={l.href}
-                  className="text-sm transition-colors duration-200 hover:text-[#C9622E]"
-                  style={{ color: 'var(--color-muted)' }}
-                >
-                  {l.label}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          onClick={() => handleAnchorClick('#contact')}
-          className="hidden md:inline-flex items-center px-5 py-2 rounded-[10px] text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#8A4A2A]"
-          style={{ background: 'var(--color-accent)', fontFamily: 'var(--font-geist-sans)' }}
-        >
-          Hire Me
-        </button>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          style={{ color: 'var(--color-ink)' }}
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
-        >
-          {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-        </button>
-      </nav>
-
+      {/* Mobile Drawer */}
       <AnimatePresence>
-        {open && (
+        {mobileMenuOpen && (
           <motion.div
-            id="mobile-nav"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden overflow-hidden border-t"
-            style={{ background: 'var(--color-canvas)', borderColor: 'var(--color-border)' }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden overflow-hidden bg-[#0A0A0B] border-b border-[#222226]"
           >
-            <ul className="px-6 py-5 space-y-4">
-              {links.map((l) => (
-                <li key={l.href}>
-                  {l.isAnchor ? (
-                    <button
-                      onClick={() => handleAnchorClick(l.href)}
-                      className="text-base w-full text-left transition-colors hover:text-[#C9622E]"
-                      style={{ color: 'var(--color-ink)', fontFamily: 'var(--font-geist-sans)' }}
-                    >
-                      {l.label}
-                    </button>
-                  ) : (
+            <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
+              <div className="grid grid-cols-2 gap-2.5">
+                {navLinks.map((link) => {
+                  const isActive =
+                    link.href === '/'
+                      ? pathname === '/'
+                      : pathname?.startsWith(link.href)
+
+                  return (
                     <Link
-                      href={l.href}
-                      onClick={() => setOpen(false)}
-                      className="text-base block w-full transition-colors hover:text-[#C9622E]"
-                      style={{ color: 'var(--color-ink)', fontFamily: 'var(--font-geist-sans)' }}
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`px-4 py-3 rounded-lg text-base font-sans font-medium border transition-all ${
+                        isActive
+                          ? 'bg-[#18181B] border-[#D4AF37]/60 text-[#D4AF37] font-semibold'
+                          : 'bg-[#121214] border-[#222226] text-[#A1A1AA] hover:text-[#F4F4F0]'
+                      }`}
                     >
-                      {l.label}
+                      {link.label}
                     </Link>
-                  )}
-                </li>
-              ))}
-              <li>
-                <button
-                  onClick={() => handleAnchorClick('#contact')}
-                  className="w-full mt-2 py-3 rounded-[10px] text-sm font-semibold text-white"
-                  style={{ background: 'var(--color-accent)', fontFamily: 'var(--font-geist-sans)' }}
+                  )
+                })}
+              </div>
+
+              {/* Mobile CTA */}
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/2347084721120"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-4 rounded-lg text-base font-sans font-semibold bg-[#D4AF37] text-[#0A0A0B] active:scale-[0.98] transition-all shadow-[0_0_25px_rgba(212,175,55,0.22)]"
                 >
-                  Hire Me
-                </button>
-              </li>
-            </ul>
+                  <span>Let&apos;s Have A Talk</span>
+                  <ArrowUpRight size={18} />
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

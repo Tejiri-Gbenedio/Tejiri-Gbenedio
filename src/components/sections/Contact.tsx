@@ -25,7 +25,7 @@ const channels = [
   {
     icon: <MessageCircle size={20} />,
     label: 'WhatsApp',
-    value: '+234 705 238 1068',
+    value: '+234 708 472 1120',
     href: contactLinks.whatsapp,
     description: 'Fastest response. Message me directly.',
   },

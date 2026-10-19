@@ -43,6 +43,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# temporary development/screenshot artifacts
+.shot.mjs
+.shots/
+dev.log
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

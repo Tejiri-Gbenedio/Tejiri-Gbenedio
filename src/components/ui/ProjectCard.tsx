@@ -33,7 +33,7 @@ function CardContent({ project }: { project: Project }) {
       </div>
 
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {project.features.map((f) => (
+        {project.features?.map((f) => (
           <span key={f} className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: 'var(--color-accent-soft)', color: 'var(--color-accent-ink)' }}>
             {f}
           </span>

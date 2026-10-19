@@ -1,78 +1,146 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Surfaces — warm paper */
-  --color-canvas: #FAF8F5;
-  --color-surface-alt: #F3EFE9;
-  --color-card: #FFFFFF;
+  /* Obsidian & Brushed Brass Color System */
+  --color-bg-primary: #0A0A0B;
+  --color-surface: #121214;
+  --color-surface-hover: #18181B;
+  --color-border-hairline: #222226;
+  --color-border-hover: #323238;
+  --color-text-primary: #F4F4F0;
+  --color-text-secondary: #8E8E93;
+  --color-accent-gold: #D4AF37;
+  --color-accent-hover: #E5A93C;
+  --color-status-live: #10B981;
 
-  /* Ink */
-  --color-ink: #1C1917;
-  --color-muted: #6B6560;
-  --color-subtle: #9A938C;
-
-  /* Hairlines */
-  --color-border: #E7E1D8;
-  --color-border-strong: #DCD3C6;
-
-  /* Accent — terracotta */
-  --color-accent: #C9622E;
-  --color-accent-bright: #D97A4D;
-  --color-accent-hover: #8A4A2A;
-  --color-accent-ink: #9A481F;
-  --color-accent-soft: #FBEEE4;
-
-  /* Footer / warm dark */
-  --color-footer: #1C1917;
-
-  /* Type */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  /* Typography */
+  --font-display: var(--font-display), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
 }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background-color: #0A0A0B;
+  color: #F4F4F0;
 }
 
 body {
-  background-color: var(--color-canvas);
-  color: var(--color-ink);
+  background-color: #0A0A0B;
+  color: #F4F4F0;
   font-family: var(--font-sans);
-  caret-color: var(--color-accent);
+  font-size: 1.0625rem;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* Browser surfaces themed from the palette */
+/* Subtle Architectural Grid Background */
+.bg-architectural-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Hairline Grid Borders */
+.border-hairline {
+  border-color: #222226;
+}
+
+.border-hairline-hover {
+  transition: border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.border-hairline-hover:hover {
+  border-color: #323238;
+  background-color: #18181B;
+}
+
+/* Brushed Brass Accent Helpers */
+.text-brass {
+  color: #D4AF37;
+}
+
+.border-brass {
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+.bg-brass-subtle {
+  background-color: rgba(212, 175, 55, 0.08);
+}
+
+/* Selection */
 ::selection {
-  background: rgba(201, 98, 46, 0.18);
-  color: var(--color-ink);
+  background: rgba(212, 175, 55, 0.25);
+  color: #F4F4F0;
 }
 
+/* Focus Outline */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* Custom Obsidian Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222226;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--color-canvas); }
-::-webkit-scrollbar-thumb {
-  background: var(--color-border-strong);
-  border: 3px solid var(--color-canvas);
-  border-radius: 999px;
+::-webkit-scrollbar-thumb:hover {
+  background: #323238;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
-/* Respect reduced-motion for CSS animations, transitions, and smooth scroll.
-   framer-motion is handled via MotionConfig reducedMotion="user". */
+/* Pulsing Status Dot */
+@keyframes statusPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-status-pulse {
+  animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Reduced Motion Mode Support */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
   *, *::before, *::after {
-    animation-duration: 0.001ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
