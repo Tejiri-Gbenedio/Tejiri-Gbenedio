@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import MaskText from '@/components/motion/MaskText'
@@ -25,11 +25,28 @@ import {
   ChevronRight,
   Briefcase,
   GraduationCap,
+  X,
 } from 'lucide-react'
 import { builderCredential, contactLinks, cv } from '@/data/portfolio'
 
 export default function CVView() {
   const [showPdfModal, setShowPdfModal] = useState(false)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowPdfModal(false)
+    }
+    if (showPdfModal) {
+      document.body.style.overflow = 'hidden'
+      window.addEventListener('keydown', handleKeyDown)
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [showPdfModal])
 
   const experience = [
     {
@@ -513,22 +530,39 @@ export default function CVView() {
 
       {/* PDF Modal Preview */}
       {showPdfModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-5xl h-[90vh] bg-[#121214] border border-[#222226] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#222226] bg-[#18181B]">
-              <div className="flex items-center gap-3">
-                <FileText className="w-5 h-5 text-[#D4AF37]" />
-                <div>
-                  <h3 className="font-sans text-base font-bold text-[#F4F4F0]">
+        <div
+          onClick={() => setShowPdfModal(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-5xl h-[90vh] bg-[#121214] border border-[#222226] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#222226] bg-[#18181B] gap-4 flex-wrap">
+              <div className="flex items-center gap-3 min-w-0">
+                <FileText className="w-5 h-5 text-[#D4AF37] shrink-0" />
+                <div className="truncate">
+                  <h3 className="font-sans text-base font-bold text-[#F4F4F0] truncate">
                     Tejiri-Gbenedio-CV.pdf
                   </h3>
-                  <p className="font-mono text-xs text-[#A1A1AA]">
+                  <p className="font-mono text-xs text-[#A1A1AA] truncate">
                     Official Curriculum Vitae · Verified April 2026
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5 ml-auto">
+                <a
+                  href={contactLinks.cvPdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded bg-[#18181B] hover:bg-[#222226] border border-[#27272A] hover:border-[#D4AF37]/40 text-xs font-mono text-[#F4F4F0] transition-colors"
+                  title="Open PDF in full browser tab"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Open in Tab</span>
+                </a>
+
                 <a
                   href={contactLinks.cvPdf}
                   download="Tejiri-Gbenedio-CV.pdf"
@@ -537,21 +571,52 @@ export default function CVView() {
                   <Download className="w-4 h-4" />
                   <span>Download PDF</span>
                 </a>
+
                 <button
                   onClick={() => setShowPdfModal(false)}
-                  className="px-3.5 py-2 rounded bg-[#27272A] hover:bg-[#333338] text-xs md:text-sm font-mono text-[#F4F4F0] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded bg-[#27272A] hover:bg-[#333338] text-xs md:text-sm font-mono text-[#F4F4F0] transition-colors"
                 >
-                  Close [ESC]
+                  <X className="w-4 h-4" />
+                  <span className="hidden sm:inline">Close</span>
                 </button>
               </div>
             </div>
 
             <div className="flex-1 w-full h-full bg-[#0A0A0B] p-2 sm:p-4">
-              <iframe
-                src={`${contactLinks.cvPdf}#view=FitH`}
-                title="Tejiri Gbenedio CV Document Preview"
-                className="w-full h-full rounded border border-[#27272A]"
-              />
+              <object
+                data={`${contactLinks.cvPdf}#view=FitH`}
+                type="application/pdf"
+                className="w-full h-full rounded border border-[#27272A] bg-[#18181B]"
+              >
+                <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-[#121214] rounded border border-[#27272A]">
+                  <FileText className="w-12 h-12 text-[#D4AF37] mb-3" />
+                  <h4 className="font-sans text-lg font-bold text-[#F4F4F0] mb-2">
+                    PDF Document Ready for Viewing
+                  </h4>
+                  <p className="font-mono text-sm text-[#A1A1AA] max-w-md mb-6 leading-relaxed">
+                    If your browser shields or blocks inline document embedding, open the official PDF directly in a new tab or download the file.
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                    <a
+                      href={contactLinks.cvPdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[#18181B] border border-[#27272A] hover:border-[#D4AF37]/50 text-xs font-mono text-[#F4F4F0]"
+                    >
+                      <ExternalLink className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Open in Full Tab</span>
+                    </a>
+                    <a
+                      href={contactLinks.cvPdf}
+                      download="Tejiri-Gbenedio-CV.pdf"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[#D4AF37] text-[#0A0A0B] text-xs font-mono font-bold"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>Download PDF (114 KB)</span>
+                    </a>
+                  </div>
+                </div>
+              </object>
             </div>
           </div>
         </div>
